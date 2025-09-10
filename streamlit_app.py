@@ -22,28 +22,22 @@ def search_web():
 # --------------------------------------------------------------------
 # 2. PDF Tool
 # --------------------------------------------------------------------
-def load_pdf_files(uploaded_files):
-    all_documents = []
-    for uploaded_file in uploaded_files:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-            tmp_file.write(uploaded_file.read())
-            tmp_file_path = tmp_file.name
+pdf_path = "data/SW 중심사회 5월호 전문.pdf" 
+def load_pdf_files(pdf_path):
+  
+    loader = PyPDFLoader(pdf_path)
+    documents = loader.load()
 
-        loader = PyPDFLoader(tmp_file_path)
-        documents = loader.load()
-        all_documents.extend(documents)
+    text_splitter = RecursiveCharacterTextSplitter(None)
+    split_docs = text_splitter.split_documents(None)
 
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-    split_docs = text_splitter.split_documents(all_documents)
-
-    vector = FAISS.from_documents(split_docs, OpenAIEmbeddings())
+    vector = FAISS.from_documents(NotImplemented, OpenAIEmbeddings())
     retriever = vector.as_retriever(search_kwargs={"k": 5})
 
     retriever_tool = create_retriever_tool(
-        retriever,
+        None,
         name="pdf_search",
-        description="This tool gives you direct access to the uploaded PDF documents. "
-                    "Always use this tool first when the question might be answered from the PDFs."
+        description="This tool gives you direct access to the reference PDF document."
     )
     return retriever_tool
 
