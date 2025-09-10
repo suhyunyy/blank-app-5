@@ -77,7 +77,17 @@ def build_agent(tools):
 def ask_agent(agent_executor, question: str):
     result = agent_executor.invoke({"input": question})
     answer = result["output"]
+
+    # 출처(툴 사용 내역) 확인
+    sources = []
+    for action, obs in result.get("intermediate_steps", []):
+        sources.append(f"- Tool: {action.tool}, Query: {action.tool_input}")
+
+    if sources:
+        answer += "\n\n출처:\n" + "\n".join(sources)
+
     return f"답변:\n{answer}"
+
 
 
 # --------------------------------------------------------------------
