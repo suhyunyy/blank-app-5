@@ -78,13 +78,10 @@ def ask_agent(agent_executor, question: str):
     result = agent_executor.invoke({"input": question})
     answer = result["output"]
 
-    # 출처(툴 사용 내역) 확인
-    sources = []
-    for action, obs in result.get("intermediate_steps", []):
-        sources.append(f"- Tool: {action.tool}, Query: {action.tool_input}")
-
-    if sources:
-        answer += "\n\n출처:\n" + "\n".join(sources)
+    # intermediate_steps에서 마지막만 가져오기
+    if result.get("intermediate_steps"):
+        last_action, _ = result["intermediate_steps"][-1]
+        answer += f"\n\n출처:\n- Tool: {last_action.tool}, Query: {last_action.tool_input}"
 
     return f"답변:\n{answer}"
 
