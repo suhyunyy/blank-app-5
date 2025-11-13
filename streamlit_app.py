@@ -95,7 +95,6 @@ def main():
     with st.sidebar:
         openai_api = st.text_input("OPENAI API 키", type="password")
         tavily_api = st.text_input("TAVILY API 키", type="password")
-        pdf_docs = st.file_uploader("PDF 파일 업로드", accept_multiple_files=True)
 
     if openai_api and tavily_api:
         os.environ['OPENAI_API_KEY'] = openai_api
