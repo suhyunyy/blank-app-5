@@ -88,7 +88,7 @@ def ask_agent(agent_executor, question: str):
 # --------------------------------------------------------------------
 def main():
     st.set_page_config(page_title="웰시코기 사용법", layout="wide", page_icon="🤖")
-    st.image('kibo.jpg', width=800)
+    st.image('data/kibo.jpg', width=800)
     st.markdown('---')
     st.title("안녕하세요! 알알~ RAG + Web을 활용한 '웰시코기 AI 비서' 입니다")  
 
